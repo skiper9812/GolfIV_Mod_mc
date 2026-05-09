@@ -1,6 +1,6 @@
-package net.kaupenjoe.tutorialmod.item;
+package net.debile.tutorialmod.item;
 
-import net.kaupenjoe.tutorialmod.TutorialMod;
+import net.debile.tutorialmod.Golf4Mod;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, TutorialMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, Golf4Mod.MOD_ID);
 
     public static final RegistryObject<Item> ALEXANDRITE = ITEMS.register("alexandrite",
             () -> new Item(new Item.Properties()));
