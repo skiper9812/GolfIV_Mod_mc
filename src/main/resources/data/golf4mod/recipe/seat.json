@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "minecraft:wooden_doors"
+    },
+    "B": {
+      "tag": "minecraft:wooden_stairs"
+    },
+    "C": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "A ",
+    "BC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:seat"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_bars"
+    },
+    "B": {
+      "item": "minecraft:redstone_block"
+    },
+    "C": {
+      "item": "minecraft:iron_block"
+    },
+    "D": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "B B",
+    "CDC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:engine_block"
+  }
+}

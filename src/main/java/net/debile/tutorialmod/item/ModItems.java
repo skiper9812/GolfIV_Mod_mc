@@ -11,9 +11,35 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Golf4Mod.MOD_ID);
 
-    public static final RegistryObject<Item> ALEXANDRITE = ITEMS.register("alexandrite",
+    public static final RegistryObject<Item> CAR_BODY = ITEMS.register("car_body",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> RAW_ALEXANDRITE = ITEMS.register("raw_alexandrite",
+    public static final RegistryObject<Item> WHEEL_RIM = ITEMS.register("wheel_rim",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TIRE = ITEMS.register("tire",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> WHEEL = ITEMS.register("wheel",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STEERING_WHEEL = ITEMS.register("steering_wheel",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ENGINE_BLOCK = ITEMS.register("engine_block",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ENGINE_CUP = ITEMS.register("engine_cup",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> FUEL_TANK = ITEMS.register("fuel_tank",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GEARBOX = ITEMS.register("gearbox",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CAR_LIGHTS = ITEMS.register("car_lights",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RADIO = ITEMS.register("radio",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TRUNK = ITEMS.register("trunk",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> HONKER = ITEMS.register("honker",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STEERING_WHEEL_HONKER = ITEMS.register("steering_wheel_honker",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SEAT = ITEMS.register("seat",
             () -> new Item(new Item.Properties()));
 
 

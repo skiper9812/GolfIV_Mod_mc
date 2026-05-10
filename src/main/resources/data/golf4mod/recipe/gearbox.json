@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:lever"
+    },
+    "B": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "D": {
+      "item": "minecraft:iron_block"
+    },
+    "E": {
+      "item": "minecraft:piston"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:gearbox"
+  }
+}

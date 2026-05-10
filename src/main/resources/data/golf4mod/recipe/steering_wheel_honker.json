@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "golf4mod:steering_wheel"
+    },
+    "B": {
+      "item": "golf4mod:honker"
+    }
+  },
+  "pattern": [
+    "AB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:steering_wheel_honker"
+  }
+}

@@ -1,6 +1,7 @@
 package net.debile.tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.debile.tutorialmod.item.ModCreativeModeTabs;
 import net.debile.tutorialmod.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,6 +32,8 @@ public class Golf4Mod {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        ModCreativeModeTabs.register(modEventBus);
+
         ModItems.register(modEventBus);
 
         // Register the item to a creative tab
@@ -46,8 +49,21 @@ public class Golf4Mod {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.ALEXANDRITE);
-            event.accept(ModItems.RAW_ALEXANDRITE);
+            event.accept(ModItems.CAR_BODY);
+            event.accept(ModItems.WHEEL_RIM);
+            event.accept(ModItems.TIRE);
+            event.accept(ModItems.WHEEL);
+            event.accept(ModItems.STEERING_WHEEL);
+            event.accept(ModItems.ENGINE_BLOCK);
+            event.accept(ModItems.ENGINE_CUP);
+            event.accept(ModItems.FUEL_TANK);
+            event.accept(ModItems.GEARBOX);
+            event.accept(ModItems.CAR_LIGHTS);
+            event.accept(ModItems.RADIO);
+            event.accept(ModItems.TRUNK);
+            event.accept(ModItems.HONKER);
+            event.accept(ModItems.STEERING_WHEEL_HONKER);
+            event.accept(ModItems.SEAT);
         }
     }
 

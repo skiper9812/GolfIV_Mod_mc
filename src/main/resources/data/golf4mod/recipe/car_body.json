@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "minecraft:iron_trapdoor"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BBB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:car_body"
+  }
+}
