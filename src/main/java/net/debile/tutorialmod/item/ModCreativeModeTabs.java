@@ -32,6 +32,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.HONKER.get());
                 output.accept(ModItems.STEERING_WHEEL_HONKER.get());
                 output.accept(ModItems.SEAT.get());
+                output.accept(ModItems.GOLF4_CAR_ITEM.get());
             }).build());
 
     public static void register(IEventBus eventBus) {

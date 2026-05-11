@@ -1,8 +1,10 @@
 package net.debile.tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.debile.tutorialmod.entity.ModEntityTypes;
 import net.debile.tutorialmod.item.ModCreativeModeTabs;
 import net.debile.tutorialmod.item.ModItems;
+import net.debile.tutorialmod.network.ModNetwork;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,14 +38,16 @@ public class Golf4Mod {
 
         ModItems.register(modEventBus);
 
+        ModEntityTypes.register(modEventBus);
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)  {
-
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        ModNetwork.register();
     }
 
     // Add the example block item to the building blocks tab
@@ -64,6 +68,7 @@ public class Golf4Mod {
             event.accept(ModItems.HONKER);
             event.accept(ModItems.STEERING_WHEEL_HONKER);
             event.accept(ModItems.SEAT);
+            event.accept(ModItems.GOLF4_CAR_ITEM);
         }
     }
 
@@ -78,7 +83,7 @@ public class Golf4Mod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            // Car entity uses the boat renderer for now (temporary until custom model)
         }
     }
 }
