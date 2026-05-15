@@ -1,6 +1,8 @@
 package net.debile.tutorialmod.entity;
 
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 import net.debile.tutorialmod.item.ModItems;
@@ -134,18 +136,20 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         int idx = this.getPassengers().indexOf(entity);
         // Seat layout: 0=driver(front-left), 1=front-right, 2-4=back row
         double xOff = switch (idx) {
-            case 0 -> 0.3;     // driver
-            case 1 -> -0.3;    // front passenger
-            case 2 -> 0.4;     // back left
+            case 0 -> 0.45;     // driver
+            case 1 -> -0.45;    // front passenger
+            case 2 -> 0.45;     // back left
             case 3 -> 0.0;     // back center
-            case 4 -> -0.4;    // back right
+            case 4 -> -0.45;    // back right
             default -> 0.0;
         };
         double zOff = switch (idx) {
             case 0, 1 -> 0.2;  // front row
             default -> -0.6;   // back row
         };
-        return new Vec3(xOff, (double)(dims.height() / 3.0F), zOff)
+        double seatHeight = (double)(dims.height() / 3.0F) + 0.5D;
+
+        return new Vec3(xOff, seatHeight, zOff)
                 .yRot(-this.getYRot() * ((float) Math.PI / 180F));
     }
 
@@ -276,7 +280,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
         // ── Light particles (client-side only) ──
         if (this.level().isClientSide) {
-            spawnLightParticles();
+            spawnLightParticles(); // for testing
         } else {
             updateRealLights();
         }
@@ -284,25 +288,63 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
     private void spawnLightParticles() {
         float yawRad = -this.getYRot() * ((float) Math.PI / 180F);
-        double sinY = Mth.sin(yawRad);
-        double cosY = Mth.cos(yawRad);
+
+        // Forward vector (corrected for 90° rotated model)
+        double forwardX = Mth.sin(yawRad);
+        double forwardZ = Mth.cos(yawRad);
+
+        // Right vector
+        double rightX = forwardZ;
+        double rightZ = -forwardX;
+
+        // Tuning
+        double frontOffset = 2.8;
+        double backOffset = 2.2;
+        double sideOffset = 0.4;
 
         if (areFrontLightsOn()) {
-            // Two front headlights, offset left/right
+
+            // Two front headlights
             for (int side = -1; side <= 1; side += 2) {
-                double fx = this.getX() + cosY * 1.2 + sinY * side * 0.4;
-                double fz = this.getZ() - sinY * 1.2 + cosY * side * 0.4;
-                this.level().addParticle(ParticleTypes.END_ROD,
-                        fx, this.getY() + 0.6, fz, 0, 0, 0);
+
+                double fx = this.getX()
+                        + forwardX * frontOffset
+                        + rightX * side * sideOffset;
+
+                double fz = this.getZ()
+                        + forwardZ * frontOffset
+                        + rightZ * side * sideOffset;
+
+                this.level().addParticle(
+                        ParticleTypes.END_ROD,
+                        fx,
+                        this.getY() + 0.6,
+                        fz,
+                        0, 0, 0
+                );
             }
         }
+
         if (areBackLightsOn()) {
+
             // Two rear lights
             for (int side = -1; side <= 1; side += 2) {
-                double bx = this.getX() - cosY * 1.0 + sinY * side * 0.4;
-                double bz = this.getZ() + sinY * 1.0 + cosY * side * 0.4;
-                this.level().addParticle(ParticleTypes.FLAME,
-                        bx, this.getY() + 0.5, bz, 0, 0, 0);
+
+                double bx = this.getX()
+                        - forwardX * backOffset
+                        + rightX * side * sideOffset;
+
+                double bz = this.getZ()
+                        - forwardZ * backOffset
+                        + rightZ * side * sideOffset;
+
+                this.level().addParticle(
+                        ParticleTypes.FLAME,
+                        bx,
+                        this.getY() + 0.5,
+                        bz,
+                        0, 0, 0
+                );
             }
         }
     }
@@ -373,34 +415,83 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
     // ── Real Lights Logic ────────────────────────────────────────────────
 
+    private final Set<BlockPos> activeHeadlightBlocks = new HashSet<>();
+
     private void updateRealLights() {
         float yawRad = -this.getYRot() * ((float) Math.PI / 180F);
-        double sinY = Mth.sin(yawRad);
-        double cosY = Mth.cos(yawRad);
+        double forwardX = Mth.sin(yawRad);
+        double forwardZ = Mth.cos(yawRad);
+        double rightX = forwardZ;
+        double rightZ = -forwardX;
 
         if (areFrontLightsOn()) {
-            double fx = this.getX() + cosY * 2.0;
-            double fy = this.getY() + 0.5;
-            double fz = this.getZ() - sinY * 2.0;
-            BlockPos currentFront = BlockPos.containing(fx, fy, fz);
-            if (lastFrontLightPos == null || !lastFrontLightPos.equals(currentFront)) {
-                clearLight(lastFrontLightPos);
-                if (placeLight(currentFront, 15)) {
-                    lastFrontLightPos = currentFront;
-                } else {
-                    lastFrontLightPos = null;
+            clearHeadlightBeam();
+
+            int maxBeamLength = 12; // Slightly longer for a better fade
+            double[][] headlightOffsets = {{0.6, 2.5}, {-0.6, 2.5}};
+
+            for (double[] offset : headlightOffsets) {
+                double startX = this.getX() + (forwardX * offset[1]) + (rightX * offset[0]);
+                double startZ = this.getZ() + (forwardZ * offset[1]) + (rightZ * offset[0]);
+                double startY = this.getY() + 0.6;
+
+                // Maximum spread of the cone
+                float maxAngle = 0.4f;
+
+                // Finer steps (0.1f instead of 0.2f) for a smoother, less "blocky" cone
+                for (float angle = -maxAngle; angle <= maxAngle; angle += 0.1f) {
+                    double rayX = forwardX * Math.cos(angle) - forwardZ * Math.sin(angle);
+                    double rayZ = forwardX * Math.sin(angle) + forwardZ * Math.cos(angle);
+
+                    // --- THE FIX: Calculate how close this ray is to the outside edge ---
+                    // edgeFactor is 0.0 at the center ray, and 1.0 at the outermost rays
+                    float edgeFactor = Math.abs(angle) / maxAngle;
+
+                    // Center rays can reach level 15. Outer rays are capped at 6.
+                    // This stops Minecraft from bleeding light outward at the edges!
+                    int maxLightForThisRay = 15 - (int)(edgeFactor * 9);
+
+                    // --- 1. FIND THE IMPACT POINT ---
+                    int impactDist = maxBeamLength;
+                    for (int d = 1; d <= maxBeamLength; d++) {
+                        BlockPos checkPos = BlockPos.containing(startX + rayX * d, startY, startZ + rayZ * d);
+                        BlockState state = this.level().getBlockState(checkPos);
+
+                        // Stop if we hit a solid block
+                        if (!state.isAir() && state.canOcclude()) {
+                            impactDist = d;
+                            break;
+                        }
+                    }
+
+                    // --- 2. FILL LIGHT CALCULATED FROM IMPACT ---
+                    for (int d = 1; d < impactDist; d++) {
+                        BlockPos pos = BlockPos.containing(startX + rayX * d, startY, startZ + rayZ * d);
+
+                        // Square ratio for a much better "bloom" effect right at the end
+                        float ratio = (float) d / (float) impactDist;
+                        int calculatedLight = 4 + (int)(ratio * ratio * 11);
+
+                        // Apply the edge cap we calculated earlier
+                        int finalLightLevel = Math.min(maxLightForThisRay, calculatedLight);
+
+                        if (placeLight(pos, finalLightLevel)) {
+                            activeHeadlightBlocks.add(pos);
+                        }
+                    }
                 }
             }
         } else {
-            clearLight(lastFrontLightPos);
-            lastFrontLightPos = null;
+            clearHeadlightBeam();
         }
 
+        // --- Back Lights Logic (Unchanged) ---
         if (areBackLightsOn()) {
-            double bx = this.getX() - cosY * 1.5;
-            double by = this.getY() + 0.5;
-            double bz = this.getZ() + sinY * 1.5;
-            BlockPos currentBack = BlockPos.containing(bx, by, bz);
+            double backOffset = 2.2;
+            double bx = this.getX() - forwardX * backOffset;
+            double bz = this.getZ() - forwardZ * backOffset;
+
+            BlockPos currentBack = BlockPos.containing(bx, this.getY() + 0.5, bz);
             if (lastBackLightPos == null || !lastBackLightPos.equals(currentBack)) {
                 clearLight(lastBackLightPos);
                 if (placeLight(currentBack, 10)) {
@@ -413,6 +504,15 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
             clearLight(lastBackLightPos);
             lastBackLightPos = null;
         }
+    }
+
+    private void clearHeadlightBeam() {
+
+        for (BlockPos pos : activeHeadlightBlocks) {
+            clearLight(pos);
+        }
+
+        activeHeadlightBlocks.clear();
     }
 
     private void clearLight(BlockPos pos) {

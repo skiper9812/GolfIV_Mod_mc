@@ -21,7 +21,7 @@ public class ModEntityTypes {
             ENTITY_TYPES.register("golf4_car", () ->
                     EntityType.Builder
                             .<Golf4CarEntity>of(Golf4CarEntity::new, MobCategory.MISC)
-                            .sized(1.375F, 0.5625F)
+                            .sized(2.5F, 1.5F)
                             .clientTrackingRange(10)
                             .build("golf4_car"));
 
