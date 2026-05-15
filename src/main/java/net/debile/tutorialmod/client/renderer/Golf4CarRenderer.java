@@ -45,6 +45,9 @@ public class Golf4CarRenderer extends EntityRenderer<Golf4CarEntity> {
         // 4. Setup animations
         this.model.setupAnim(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
+        // Set visibility based on entity state
+        this.model.updateComponents(entity.isPlain(), entity.hasSteer(), entity.getWheelsCount(), entity.getLightsCount());
+
         // 5. Render the actual model
         VertexConsumer vertexconsumer = buffer.getBuffer(this.model.renderType(TEXTURE));
 

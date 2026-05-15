@@ -5,6 +5,11 @@ import net.debile.tutorialmod.entity.Golf4CarEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.debile.tutorialmod.block.entity.CarBodyBlockEntity;
+import net.debile.tutorialmod.entity.ModEntityTypes;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
@@ -21,6 +26,12 @@ public class ModNetwork {
                 .encoder(CarActionPacket::encode)
                 .decoder(CarActionPacket::decode)
                 .consumerMainThread(CarActionPacket::handle)
+                .add();
+
+        CHANNEL.messageBuilder(ForgeCarPacket.class)
+                .encoder(ForgeCarPacket::encode)
+                .decoder(ForgeCarPacket::decode)
+                .consumerMainThread(ForgeCarPacket::handle)
                 .add();
     }
 
@@ -47,6 +58,59 @@ public class ModNetwork {
                     case RADIO_TOGGLE -> car.toggleRadio();
                     case FRONT_LIGHTS_TOGGLE -> car.toggleFrontLights();
                     case BACK_LIGHTS_TOGGLE -> car.toggleBackLights();
+                }
+            }
+        }
+    }
+
+    public static class ForgeCarPacket {
+        private final BlockPos pos;
+
+        public ForgeCarPacket(BlockPos pos) {
+            this.pos = pos;
+        }
+
+        public static void encode(ForgeCarPacket msg, FriendlyByteBuf buf) {
+            buf.writeBlockPos(msg.pos);
+        }
+
+        public static ForgeCarPacket decode(FriendlyByteBuf buf) {
+            return new ForgeCarPacket(buf.readBlockPos());
+        }
+
+        public static void handle(ForgeCarPacket msg, CustomPayloadEvent.Context ctx) {
+            ServerPlayer player = ctx.getSender();
+            if (player == null) return;
+            ServerLevel level = player.serverLevel();
+
+            BlockEntity be = level.getBlockEntity(msg.pos);
+            if (be instanceof CarBodyBlockEntity carBody) {
+                // Verify components minimums
+                boolean hasEngine = !carBody.getItem(0).isEmpty();
+                boolean hasGearbox = !carBody.getItem(1).isEmpty();
+                boolean hasSteer = !carBody.getItem(2).isEmpty();
+                int wheelsCount = carBody.getItem(3).getCount();
+                int seatsCount = carBody.getItem(4).getCount();
+                boolean hasTank = !carBody.getItem(5).isEmpty();
+
+                if (hasEngine && hasGearbox && hasSteer && wheelsCount == 4 && seatsCount >= 1 && hasTank) {
+                    // Remove block
+                    level.removeBlock(msg.pos, false);
+
+                    // Spawn entity
+                    Golf4CarEntity car = new Golf4CarEntity(ModEntityTypes.GOLF4_CAR.get(), level);
+                    car.setPos(msg.pos.getX() + 0.5, msg.pos.getY(), msg.pos.getZ() + 0.5);
+
+                    car.setHasSteer(true);
+                    car.setWheelsCount(4);
+                    car.setSeatsCount(seatsCount);
+                    car.setLightsCount(0); // Optional lights logic later
+                    car.setPlain(false);
+
+                    level.addFreshEntity(car);
+
+                    // Close menu
+                    player.closeContainer();
                 }
             }
         }

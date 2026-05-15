@@ -58,6 +58,16 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
             SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_BACK_LIGHTS =
             SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_PLAIN =
+            SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_STEER =
+            SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_WHEELS_COUNT =
+            SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_LIGHTS_COUNT =
+            SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_SEATS_COUNT =
+            SynchedEntityData.defineId(Golf4CarEntity.class, EntityDataSerializers.INT);
 
     // ── Trunk inventory ─────────────────────────────────────────────────
     private static final int CONTAINER_SIZE = 27;
@@ -87,6 +97,22 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
     private BlockPos lastFrontLightPos;
     private BlockPos lastBackLightPos;
 
+    // ── Rendering ───────────────────────────────────────────────────────
+    public boolean isPlain() { return this.entityData.get(DATA_IS_PLAIN); }
+    public void setPlain(boolean plain) { this.entityData.set(DATA_IS_PLAIN, plain); }
+    
+    public boolean hasSteer() { return this.entityData.get(DATA_HAS_STEER); }
+    public void setHasSteer(boolean steer) { this.entityData.set(DATA_HAS_STEER, steer); }
+    
+    public int getWheelsCount() { return this.entityData.get(DATA_WHEELS_COUNT); }
+    public void setWheelsCount(int count) { this.entityData.set(DATA_WHEELS_COUNT, count); }
+    
+    public int getLightsCount() { return this.entityData.get(DATA_LIGHTS_COUNT); }
+    public void setLightsCount(int count) { this.entityData.set(DATA_LIGHTS_COUNT, count); }
+
+    public int getSeatsCount() { return this.entityData.get(DATA_SEATS_COUNT); }
+    public void setSeatsCount(int count) { this.entityData.set(DATA_SEATS_COUNT, count); }
+
     // ── Constructors ────────────────────────────────────────────────────
 
     public Golf4CarEntity(EntityType<? extends Boat> type, Level level) {
@@ -108,6 +134,11 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         builder.define(DATA_RADIO_PLAYING, false);
         builder.define(DATA_FRONT_LIGHTS, false);
         builder.define(DATA_BACK_LIGHTS, false);
+        builder.define(DATA_IS_PLAIN, false);
+        builder.define(DATA_HAS_STEER, false);
+        builder.define(DATA_WHEELS_COUNT, 0);
+        builder.define(DATA_LIGHTS_COUNT, 0);
+        builder.define(DATA_SEATS_COUNT, 5); // Default 5 for spawned cars via item
     }
 
     // ── Step height ─────────────────────────────────────────────────────
@@ -126,9 +157,9 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
     @Override
     public ItemStack getPickResult() { return new ItemStack(getDropItem()); }
 
-    // ── Passengers (5 seats: 1 driver + 4 passengers) ───────────────────
+    // ── Passengers (Dynamic seat count) ───────────────────
 
-    @Override protected int getMaxPassengers() { return 5; }
+    @Override protected int getMaxPassengers() { return Math.max(1, getSeatsCount()); }
     @Override protected float getSinglePassengerXOffset() { return 0.15F; }
 
     @Override
@@ -243,6 +274,11 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         tag.putBoolean("RadioPlaying", isRadioPlaying());
         tag.putBoolean("FrontLights", areFrontLightsOn());
         tag.putBoolean("BackLights", areBackLightsOn());
+        tag.putBoolean("IsPlain", isPlain());
+        tag.putBoolean("HasSteer", hasSteer());
+        tag.putInt("WheelsCount", getWheelsCount());
+        tag.putInt("LightsCount", getLightsCount());
+        tag.putInt("SeatsCount", getSeatsCount());
         this.addChestVehicleSaveData(tag, this.registryAccess());
     }
 
@@ -251,6 +287,13 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         this.entityData.set(DATA_RADIO_PLAYING, tag.getBoolean("RadioPlaying"));
         this.entityData.set(DATA_FRONT_LIGHTS, tag.getBoolean("FrontLights"));
         this.entityData.set(DATA_BACK_LIGHTS, tag.getBoolean("BackLights"));
+        this.setPlain(tag.getBoolean("IsPlain"));
+        this.setHasSteer(tag.getBoolean("HasSteer"));
+        this.setWheelsCount(tag.getInt("WheelsCount"));
+        this.setLightsCount(tag.getInt("LightsCount"));
+        if (tag.contains("SeatsCount")) {
+            this.setSeatsCount(tag.getInt("SeatsCount"));
+        }
         this.readChestVehicleSaveData(tag, this.registryAccess());
     }
 

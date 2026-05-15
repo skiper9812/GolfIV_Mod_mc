@@ -6,6 +6,13 @@ import net.debile.tutorialmod.item.ModCreativeModeTabs;
 import net.debile.tutorialmod.item.ModItems;
 import net.debile.tutorialmod.network.ModNetwork;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.debile.tutorialmod.block.ModBlocks;
+import net.debile.tutorialmod.block.entity.ModBlockEntities;
+import net.debile.tutorialmod.menu.ModMenus;
+import net.debile.tutorialmod.client.screen.CarBodyScreen;
+import net.debile.tutorialmod.client.renderer.CarBodyBlockEntityRenderer;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -37,6 +44,9 @@ public class Golf4Mod {
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModMenus.register(modEventBus);
 
         ModEntityTypes.register(modEventBus);
 
@@ -84,6 +94,14 @@ public class Golf4Mod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Car entity uses the boat renderer for now (temporary until custom model)
+            event.enqueueWork(() -> {
+                MenuScreens.register(ModMenus.CAR_BODY_MENU.get(), CarBodyScreen::new);
+            });
+        }
+
+        @SubscribeEvent
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(ModBlockEntities.CAR_BODY_BE.get(), CarBodyBlockEntityRenderer::new);
         }
     }
 }

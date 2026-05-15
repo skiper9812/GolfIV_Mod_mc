@@ -4,6 +4,8 @@ import net.debile.tutorialmod.Golf4Mod;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.debile.tutorialmod.block.ModBlocks;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -13,7 +15,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, Golf4Mod.MOD_ID);
 
     public static final RegistryObject<Item> CAR_BODY = ITEMS.register("car_body",
-            () -> new Item(new Item.Properties()));
+            () -> new BlockItem(ModBlocks.CAR_BODY.get(), new Item.Properties()));
     public static final RegistryObject<Item> WHEEL_RIM = ITEMS.register("wheel_rim",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TIRE = ITEMS.register("tire",
