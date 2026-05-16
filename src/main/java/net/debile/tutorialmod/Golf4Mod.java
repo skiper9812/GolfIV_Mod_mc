@@ -2,6 +2,7 @@ package net.debile.tutorialmod;
 
 import com.mojang.logging.LogUtils;
 import net.debile.tutorialmod.entity.ModEntityTypes;
+import net.debile.tutorialmod.fluid.ModFluids;
 import net.debile.tutorialmod.item.ModCreativeModeTabs;
 import net.debile.tutorialmod.item.ModItems;
 import net.debile.tutorialmod.network.ModNetwork;
@@ -43,6 +44,7 @@ public class Golf4Mod {
 
         ModCreativeModeTabs.register(modEventBus);
 
+        ModFluids.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
@@ -79,6 +81,8 @@ public class Golf4Mod {
             event.accept(ModItems.STEERING_WHEEL_HONKER);
             event.accept(ModItems.SEAT);
             event.accept(ModItems.GOLF4_CAR_ITEM);
+            event.accept(ModItems.TANK);
+            event.accept(ModFluids.FUEL_BUCKET);
         }
     }
 

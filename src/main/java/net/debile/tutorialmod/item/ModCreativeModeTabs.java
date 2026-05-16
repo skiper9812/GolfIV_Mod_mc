@@ -1,6 +1,7 @@
 package net.debile.tutorialmod.item;
 
 import net.debile.tutorialmod.Golf4Mod;
+import net.debile.tutorialmod.fluid.ModFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -33,6 +34,8 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.STEERING_WHEEL_HONKER.get());
                 output.accept(ModItems.SEAT.get());
                 output.accept(ModItems.GOLF4_CAR_ITEM.get());
+                output.accept(ModItems.TANK.get());
+                output.accept(ModFluids.FUEL_BUCKET.get());
             }).build());
 
     public static void register(IEventBus eventBus) {

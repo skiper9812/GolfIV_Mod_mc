@@ -21,6 +21,11 @@
   "key.golf4mod.front_lights": "Toggle Front Lights",
   "key.golf4mod.back_lights": "Toggle Back Lights",
   "key.categories.golf4mod": "Golf IV Car",
+  "item.golf4mod.fuel_bucket": "Fuel Bucket",
+  "block.golf4mod.fuel": "Fuel",
+  "block.golf4mod.tank": "Fuel Tank",
+  "fluid_type.golf4mod.fuel": "Fuel",
+
 
   "creativetab.golf4mod.golf4mod_tab": "Golf4Mod Tab"
 }

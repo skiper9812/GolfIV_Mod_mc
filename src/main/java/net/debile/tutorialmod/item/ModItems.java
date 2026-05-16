@@ -48,6 +48,9 @@ public class ModItems {
     public static final RegistryObject<Item> GOLF4_CAR_ITEM = ITEMS.register("golf4_car",
             () -> new Golf4CarItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> TANK = ITEMS.register("tank",
+            () -> new BlockItem(ModBlocks.TANK.get(), new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

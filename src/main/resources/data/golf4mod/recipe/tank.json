@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "C": {
+      "tag": "minecraft:glass_blocks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "CBC",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "golf4mod:tank"
+  }
+}

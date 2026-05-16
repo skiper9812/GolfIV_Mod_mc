@@ -15,6 +15,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> CAR_BODY = BLOCKS.register("car_body",
             () -> new CarBodyBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5f)));
 
+    public static final RegistryObject<Block> TANK = BLOCKS.register("tank",
+            () -> new TankBlock(BlockBehaviour.Properties.of().strength(3.0f)));
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
