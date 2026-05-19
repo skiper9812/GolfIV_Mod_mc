@@ -28,11 +28,11 @@ public class ModStructureInjection {
 
         ResourceLocation structureId = ResourceLocation.fromNamespaceAndPath("golf4mod", "orlen_station");
 
-        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/plains/houses"), structureId, 30);
-        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/snowy/houses"), structureId, 30);
-        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/savanna/houses"), structureId, 30);
-        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/taiga/houses"), structureId, 30);
-        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/desert/houses"), structureId, 30);
+        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/plains/houses"), structureId, 20);
+        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/snowy/houses"), structureId, 20);
+        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/savanna/houses"), structureId, 20);
+        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/taiga/houses"), structureId, 20);
+        addToPool(templatePoolRegistry, ResourceLocation.fromNamespaceAndPath("minecraft", "village/desert/houses"), structureId, 20);
     }
 
     private static void addToPool(Registry<StructureTemplatePool> registry,

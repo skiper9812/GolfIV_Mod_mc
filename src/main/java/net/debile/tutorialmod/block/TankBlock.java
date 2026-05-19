@@ -43,19 +43,18 @@ public class TankBlock extends Block implements EntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-        // Reagujemy tylko na wiadra — sprawdzenie instanceof jest niezawodne
-        // (w przeciwieństwie do FluidUtil.getFluidHandler, które może zawieść w Forge 1.21)
+        //Reagujemy tylko na wiadra — sprawdzenie instanceof
         if (!(stack.getItem() instanceof BucketItem bucketItem)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Klient: zawsze zwróć sukces dla wiadra → blokuje BucketItem.use() po stronie klienta,
-        // co zapobiega stawianiu paliwa jako bloku w świecie
+        //Klient: zawsze zwróć sukces dla wiadra → blokuje BucketItem.use() po stronie klienta,
+        //co zapobiega stawianiu paliwa jako bloku w świecie
         if (level.isClientSide()) {
             return ItemInteractionResult.sidedSuccess(true);
         }
 
-        // Serwer — pobranie block entity
+        //Serwer — pobranie block entity
         if (!(level.getBlockEntity(pos) instanceof TankBlockEntity tankBe)) {
             return ItemInteractionResult.sidedSuccess(false);
         }
@@ -63,14 +62,14 @@ public class TankBlock extends Block implements EntityBlock {
         Fluid fluidInBucket = bucketItem.getFluid();
 
         if (fluidInBucket == Fluids.EMPTY) {
-            // --- PUSTE WIADRO → pobierz paliwo z tanka ---
+            //PUSTE WIADRO → pobierz paliwo z tanka
             FluidStack available = tankBe.getFluidHandler().drain(1000, IFluidHandler.FluidAction.SIMULATE);
             if (available.isEmpty()) {
-                return ItemInteractionResult.sidedSuccess(false); // tank pusty
+                return ItemInteractionResult.sidedSuccess(false); //tank pusty
             }
             tankBe.getFluidHandler().drain(1000, IFluidHandler.FluidAction.EXECUTE);
 
-            // FluidUtil.getFilledBucket używa Fluid.getBucket() z Forge — zwraca właściwy item wiadra
+            //FluidUtil.getFilledBucket używa Fluid.getBucket() z Forge — zwraca właściwy item wiadra
             ItemStack filledBucket = FluidUtil.getFilledBucket(available);
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
@@ -79,11 +78,11 @@ public class TankBlock extends Block implements EntityBlock {
                 }
             }
         } else {
-            // --- PEŁNE WIADRO → wlej paliwo do tanka ---
+            //PEŁNE WIADRO → wlej paliwo do tanka
             FluidStack toFill = new FluidStack(fluidInBucket, 1000);
             int filled = tankBe.getFluidHandler().fill(toFill, IFluidHandler.FluidAction.SIMULATE);
             if (filled == 0) {
-                return ItemInteractionResult.sidedSuccess(false); // tank pełny lub niekompatybilny płyn
+                return ItemInteractionResult.sidedSuccess(false); //tank pełny lub niekompatybilny płyn
             }
             tankBe.getFluidHandler().fill(toFill, IFluidHandler.FluidAction.EXECUTE);
             if (!player.getAbilities().instabuild) {
