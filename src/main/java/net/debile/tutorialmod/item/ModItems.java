@@ -1,6 +1,7 @@
 package net.debile.tutorialmod.item;
 
 import net.debile.tutorialmod.Golf4Mod;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -50,6 +51,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> TANK = ITEMS.register("tank",
             () -> new BlockItem(ModBlocks.TANK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> HOT_DOG = ITEMS.register("hot_dog",
+            () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
+                    .nutrition(10)
+                    .saturationModifier(0.75f)
+                    .build())));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

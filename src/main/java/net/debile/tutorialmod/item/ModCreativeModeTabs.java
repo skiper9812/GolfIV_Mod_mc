@@ -36,6 +36,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.GOLF4_CAR_ITEM.get());
                 output.accept(ModItems.TANK.get());
                 output.accept(ModFluids.FUEL_BUCKET.get());
+                output.accept(ModItems.HOT_DOG.get());
             }).build());
 
     public static void register(IEventBus eventBus) {

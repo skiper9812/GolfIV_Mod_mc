@@ -2,6 +2,25 @@
   "type": "minecraft:chest",
   "pools": [
     {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "golf4mod:hot_dog",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 8
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "rolls": {
         "min": 2,
         "max": 4
