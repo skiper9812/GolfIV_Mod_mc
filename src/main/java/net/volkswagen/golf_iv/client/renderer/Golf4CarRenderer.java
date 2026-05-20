@@ -19,6 +19,7 @@ import net.minecraft.util.Mth;
  */
 public class Golf4CarRenderer extends EntityRenderer<Golf4CarEntity> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "textures/entity/texture_car.png");
+    private static final float MODEL_SCALE = 1.4F;
     protected final Golf4CarModel model;
 
     public Golf4CarRenderer(EntityRendererProvider.Context context) {
@@ -40,8 +41,8 @@ public class Golf4CarRenderer extends EntityRenderer<Golf4CarEntity> {
     public void render(Golf4CarEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
-        poseStack.translate(0.0D, 1.375D, 0.0D);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw + 90.0F));
+        poseStack.translate(0.0D, 2.1D , 0.0D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw));
 
         float hurtTime = (float)entity.getHurtTime() - partialTick;
         float damage = entity.getDamage() - partialTick;
@@ -50,7 +51,7 @@ public class Golf4CarRenderer extends EntityRenderer<Golf4CarEntity> {
             poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(hurtTime) * hurtTime * damage / 10.0F * (float)entity.getHurtDir()));
         }
 
-        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        poseStack.scale(-MODEL_SCALE, -MODEL_SCALE, MODEL_SCALE);
 
         this.model.setupAnim(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
         this.model.updateComponents(entity.isPlain(), entity.hasSteer(), entity.getWheelsCount(), entity.getLightsCount());

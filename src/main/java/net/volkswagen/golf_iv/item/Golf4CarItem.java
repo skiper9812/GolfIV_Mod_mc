@@ -135,6 +135,16 @@ public class Golf4CarItem extends Item {
                 if (tag.contains("FuelLevel"))
                     car.setFuelLevel(tag.getInt("FuelLevel"));
                 car.setPlain(false);
+            } else if (player.getAbilities().instabuild) {
+                car.setHasSteer(true);
+                car.setHasTrunk(true);
+                car.setHasRadio(true);
+                car.setHasHonker(true);
+                car.setWheelsCount(4);
+                car.setLightsCount(4);
+                car.setSeatsCount(5);
+                car.setFuelLevel(Golf4CarEntity.MAX_FUEL_MB);
+                car.setPlain(false);
             }
 
             if (!level.noCollision(car, car.getBoundingBox().inflate(-0.1))) {
