@@ -2,6 +2,7 @@ package net.volkswagen.golf_iv;
 
 import com.mojang.logging.LogUtils;
 import net.volkswagen.golf_iv.entity.ModEntityTypes;
+import net.volkswagen.golf_iv.villager.ModVillagers;
 import net.volkswagen.golf_iv.fluid.ModFluids;
 import net.volkswagen.golf_iv.item.ModCreativeModeTabs;
 import net.volkswagen.golf_iv.item.ModItems;
@@ -53,6 +54,7 @@ public class Golf4Mod {
         ModBlockEntities.register(modEventBus);
         ModMenus.register(modEventBus);
         ModEntityTypes.register(modEventBus);
+        ModVillagers.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -63,9 +65,12 @@ public class Golf4Mod {
      *
      * @param event The common setup lifecycle event.
      */
+
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetwork.register();
+        ModVillagers.registerBlockStates(event);
     }
+
 
     /**
      * Populates custom mod items into vanilla creative tabs.

@@ -99,7 +99,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
     private static final float CAR_STEP_HEIGHT = 1.0F;
 
     public static final int MAX_FUEL_MB = 8000;
-    public static final float BURN_PER_BLOCK = 8.0f;
+    public static final float BURN_PER_BLOCK = 5.0f;
 
     private boolean inputLeft, inputRight, inputUp, inputDown;
     private float carDeltaRotation;
