@@ -43,6 +43,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.TANK.get());
                 output.accept(ModFluids.FUEL_BUCKET.get());
                 output.accept(ModItems.HOT_DOG.get());
+                output.accept(ModItems.KAPUCZINA.get());
             }).build());
 
     /**
