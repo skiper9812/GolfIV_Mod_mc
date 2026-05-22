@@ -60,6 +60,9 @@ public class ModItems {
                     .saturationModifier(0.75f)
                     .build())));
 
+    public static final RegistryObject<Item> KAPUCZINA = ITEMS.register("kapuczina",
+            () -> new Item(new Item.Properties()));
+
     /**
      * Registers all mod items on the event bus.
      *
