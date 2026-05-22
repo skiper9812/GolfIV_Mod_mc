@@ -97,6 +97,18 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
     }
 
     /**
+     * Sets the rotation of the wheels.
+     *
+     * @param rotationRadians The rotation angle in radians.
+     */
+    public void setWheelRotation(float rotationRadians) {
+        this.left.xRot = rotationRadians;
+        this.right.xRot = rotationRadians;
+        this.left2.xRot = rotationRadians;
+        this.right2.xRot = rotationRadians;
+    }
+
+    /**
      * Creates and defines the mesh geometry shapes, cuboids, textures offsets, and scale for the model layout.
      *
      * @return The layer definition of the model.
