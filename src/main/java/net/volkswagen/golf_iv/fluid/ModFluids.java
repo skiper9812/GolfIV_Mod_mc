@@ -43,9 +43,9 @@ public class ModFluids {
                 public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
                     consumer.accept(new IClientFluidTypeExtensions() {
                         private static final ResourceLocation STILL =
-                                ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "fluid/fuel_still");
+                                ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "block/fuel_still");
                         private static final ResourceLocation FLOW =
-                                ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "fluid/fuel_flow");
+                                ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "block/fuel_flow");
 
                         @Override
                         public ResourceLocation getStillTexture() {
@@ -59,7 +59,8 @@ public class ModFluids {
 
                         @Override
                         public int getTintColor() {
-                            return 0xFFD4900A;
+                            //return 0xFFD4900A; //żólty
+                            return 0xFFFFFFFF; //biały
                         }
                     });
                 }

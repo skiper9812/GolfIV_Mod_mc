@@ -2,6 +2,7 @@
   "type": "minecraft:chest",
   "pools": [
     {
+      "comment": "Hot Dog - 100% szans, od 3 do 8 sztuk",
       "rolls": 1,
       "entries": [
         {
@@ -21,6 +22,7 @@
       ]
     },
     {
+      "comment": "Szmaragdy - od 2 do 4 rzutów z dużą wagą dających szansę 50%-80%, od 2 do 6 sztuk",
       "rolls": {
         "min": 2,
         "max": 4
@@ -34,27 +36,110 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1,
-                "max": 5
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
               }
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "golf4mod:honker",
+          "name": "minecraft:air",
           "weight": 5
-        },
+        }
+      ]
+    },
+    {
+      "comment": "Kapuczina - 8% szans, 1 sztuka",
+      "rolls": 1,
+      "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot",
-          "weight": 15,
+          "name": "golf4mod:kapuczina",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.08
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "Honker - 30% szans, 1 sztuka",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "golf4mod:honker",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "Seat - 30% szans, dokładnie 2 sztuki",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "golf4mod:seat",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.30
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "Engine - 10% szans, 1 sztuka",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "golf4mod:engine_block",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "Wheel - 20% szans, od 2 do 3 sztuk",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "golf4mod:wheel",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.20
+            }
+          ],
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2,
-                "max": 8
+                "max": 3
               }
             }
           ]
