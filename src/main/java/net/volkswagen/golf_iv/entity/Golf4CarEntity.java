@@ -279,18 +279,18 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         int idx = this.getPassengers().indexOf(entity);
         // Seat layout: 0=driver(front-left), 1=front-right, 2-4=back row
         double xOff = switch (idx) {
-            case 0 -> 0.45;
-            case 1 -> -0.45;
-            case 2 -> 0.45;
+            case 0 -> 0.50;
+            case 1 -> -0.50;
+            case 2 -> 0.50;
             case 3 -> 0.0;
-            case 4 -> -0.45;
+            case 4 -> -0.50;
             default -> 0.0;
         };
         double zOff = switch (idx) {
-            case 0, 1 -> 0.2;
-            default -> -0.6;
+            case 0, 1 -> -0.4;
+            default -> -1.45;
         };
-        double seatHeight = (double) (dims.height() / 3.0F) + 0.5D;
+        double seatHeight = (double) (dims.height() / 5.0F) + 0.0D;
 
         return new Vec3(xOff, seatHeight, zOff)
                 .yRot(-this.getYRot() * ((float) Math.PI / 180F));

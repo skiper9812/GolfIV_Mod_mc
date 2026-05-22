@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class CarBodyBlockEntityRenderer implements BlockEntityRenderer<CarBodyBlockEntity> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Golf4Mod.MOD_ID, "textures/entity/texture_car.png");
+    private static final float MODEL_SCALE = 1.4F;
     private final Golf4CarModel model;
 
     public CarBodyBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -39,8 +40,8 @@ public class CarBodyBlockEntityRenderer implements BlockEntityRenderer<CarBodyBl
     public void render(CarBodyBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();
 
-        poseStack.translate(0.5D, 1.5D, 0.5D);
-        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        poseStack.translate(0.5D, 2.1D , 0.5D);
+        poseStack.scale(-MODEL_SCALE, -MODEL_SCALE, MODEL_SCALE);
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
         RenderType renderType = this.model.renderType(TEXTURE);

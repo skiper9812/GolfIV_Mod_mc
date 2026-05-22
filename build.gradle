@@ -196,6 +196,8 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.forkOptions.jvmArgs.addAll(['-Xss4M'])
+    options.fork = true
 }
 
 eclipse {
