@@ -69,6 +69,8 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
             EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HAS_TRUNK = SynchedEntityData.defineId(Golf4CarEntity.class,
             EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_TRUNK_OPEN = SynchedEntityData.defineId(Golf4CarEntity.class,
+            EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HAS_RADIO = SynchedEntityData.defineId(Golf4CarEntity.class,
             EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HAS_HONKER = SynchedEntityData.defineId(Golf4CarEntity.class,
@@ -100,6 +102,9 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
     public static final int MAX_FUEL_MB = 8000;
     public static final float BURN_PER_BLOCK = 5.0f;
+
+    private float trunkOpen;
+    private float trunkOpenO;
 
     private boolean inputLeft, inputRight, inputUp, inputDown;
     private float carDeltaRotation;
@@ -135,6 +140,18 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
     public void setHasTrunk(boolean trunk) {
         this.entityData.set(DATA_HAS_TRUNK, trunk);
+    }
+
+    public boolean isTrunkOpen() {
+        return this.entityData.get(DATA_TRUNK_OPEN);
+    }
+
+    public float getTrunkOpenProgress(float partialTick) {
+        return Mth.lerp(partialTick, this.trunkOpenO, this.trunkOpen);
+    }
+
+    private void setTrunkOpen(boolean open) {
+        this.entityData.set(DATA_TRUNK_OPEN, open);
     }
 
     public boolean hasRadio() {
@@ -226,6 +243,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         builder.define(DATA_IS_PLAIN, false);
         builder.define(DATA_HAS_STEER, false);
         builder.define(DATA_HAS_TRUNK, false);
+        builder.define(DATA_TRUNK_OPEN, false);
         builder.define(DATA_HAS_RADIO, false);
         builder.define(DATA_HAS_HONKER, false);
         builder.define(DATA_WHEELS_COUNT, 0);
@@ -329,6 +347,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
             }
 
             if (hasTrunk()) {
+                this.setTrunkOpen(true);
                 if (!this.level().isClientSide) {
                     this.gameEvent(GameEvent.CONTAINER_OPEN, player);
                     player.openMenu(this);
@@ -502,6 +521,11 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
      */
     @Override
     public void tick() {
+        this.trunkOpenO = this.trunkOpen;
+        float trunkTarget = (this.hasTrunk() && this.isTrunkOpen()) ? 1.0F : 0.0F;
+        this.trunkOpen += (trunkTarget - this.trunkOpen) * 0.2F;
+        this.trunkOpen = Mth.clamp(this.trunkOpen, 0.0F, 1.0F);
+
         if (this.getHurtTime() > 0)
             this.setHurtTime(this.getHurtTime() - 1);
         if (this.getDamage() > 0.0F)
@@ -919,6 +943,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
     public void openCustomInventoryScreen(Player player) {
         if (!hasTrunk())
             return;
+        this.setTrunkOpen(true);
         player.openMenu(this);
         if (!player.level().isClientSide) {
             this.gameEvent(GameEvent.CONTAINER_OPEN, player);
@@ -946,6 +971,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
     @Override
     public void stopOpen(Player player) {
+        this.setTrunkOpen(false);
         this.level().gameEvent(GameEvent.CONTAINER_CLOSE, this.position(), GameEvent.Context.of(player));
     }
 }
