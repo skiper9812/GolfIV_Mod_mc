@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 /**
  * Defines the 3D model geometry and hierarchy for the Golf 4 car entity,
@@ -470,7 +471,7 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
                 .texOffs(304, 54).addBox(10.0F, 2.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(304, 56).addBox(-11.0F, 2.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(230, 129).addBox(-11.0F, 1.0F, 3.0F, 22.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(230, 133).addBox(-11.0F, 13.0F, 10.0F, 22.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(230, 133).addBox(-8.0F, 13.0F, 10.0F, 16.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(36, 301).addBox(10.0F, 4.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(58, 295).addBox(10.0F, 2.0F, 1.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
                 .texOffs(146, 291).addBox(-11.0F, 2.0F, 1.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
@@ -1040,6 +1041,11 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
 
     @Override
     public void setupAnim(Golf4CarEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        float partialTick = ageInTicks - (float) entity.tickCount;
+        partialTick = Mth.clamp(partialTick, 0.0F, 1.0F);
+        float openProgress = entity.getTrunkOpenProgress(partialTick);
+        float maxOpen = 75.0F * ((float) Math.PI / 180F);
+        this.trunk.xRot = maxOpen * openProgress;
     }
 
     @Override
@@ -1047,3 +1053,4 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 }
+
