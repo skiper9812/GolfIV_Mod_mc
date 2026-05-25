@@ -100,8 +100,8 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
     private static final double MIN_SPEED_TO_STEER = 0.02;
     private static final float CAR_STEP_HEIGHT = 1.0F;
 
-    public static final int MAX_FUEL_MB = 8000;
-    public static final float BURN_PER_BLOCK = 5.0f;
+    public static final int MAX_FUEL_MB = 16000;
+    public static final float BURN_PER_BLOCK = 2.0f;
 
     private float trunkOpen;
     private float trunkOpenO;
@@ -542,11 +542,28 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
         }
 
         this.checkInsideBlocks();
+
+        double collisionSpeed = 0;
+        double collisionDirX = 0, collisionDirZ = 0;
+        if (!this.level().isClientSide && !Double.isNaN(prevFuelX)) {
+            double cdx = this.getX() - prevFuelX;
+            double cdz = this.getZ() - prevFuelZ;
+            collisionSpeed = Math.sqrt(cdx * cdx + cdz * cdz);
+            if (collisionSpeed > 0.001) {
+                collisionDirX = cdx / collisionSpeed;
+                collisionDirZ = cdz / collisionSpeed;
+            }
+        }
         List<Entity> nearby = this.level().getEntities(this,
                 this.getBoundingBox().inflate(0.2, -0.01, 0.2), EntitySelector.pushableBy(this));
         for (Entity e : nearby) {
-            if (!e.hasPassenger(this))
-                this.push(e);
+            if (e.hasPassenger(this)) continue;
+            if (!this.level().isClientSide && !this.hasPassenger(e)
+                    && e instanceof LivingEntity living && collisionSpeed > 0.03) {
+                living.hurt(this.damageSources().generic(), (float) (collisionSpeed * 8.0));
+                living.setDeltaMovement(collisionDirX * 1.5, 0.4, collisionDirZ * 1.5);
+            }
+            this.push(e);
         }
 
         if (this.level().isClientSide) {

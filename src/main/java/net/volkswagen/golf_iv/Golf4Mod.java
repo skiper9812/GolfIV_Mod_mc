@@ -13,6 +13,8 @@ import net.volkswagen.golf_iv.block.entity.ModBlockEntities;
 import net.volkswagen.golf_iv.menu.ModMenus;
 import net.volkswagen.golf_iv.client.screen.CarBodyScreen;
 import net.volkswagen.golf_iv.client.renderer.CarBodyBlockEntityRenderer;
+import net.volkswagen.golf_iv.client.SpeedometerHudHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -123,6 +125,16 @@ public class Golf4Mod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenus.CAR_BODY_MENU.get(), CarBodyScreen::new);
+                try {
+                    java.lang.reflect.Field layersField =
+                            net.minecraft.client.gui.Gui.class.getDeclaredField("layers");
+                    layersField.setAccessible(true);
+                    net.minecraft.client.gui.LayeredDraw layers =
+                            (net.minecraft.client.gui.LayeredDraw) layersField.get(Minecraft.getInstance().gui);
+                    layers.add(SpeedometerHudHandler::render);
+                } catch (Exception ex) {
+                    Golf4Mod.LOGGER.error("Failed to register speedometer HUD layer", ex);
+                }
             });
         }
 
