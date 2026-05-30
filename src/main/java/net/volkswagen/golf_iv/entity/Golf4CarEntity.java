@@ -563,7 +563,9 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
                 living.hurt(this.damageSources().generic(), (float) (collisionSpeed * 8.0));
                 living.setDeltaMovement(collisionDirX * 1.5, 0.4, collisionDirZ * 1.5);
             }
-            this.push(e);
+            if (collisionSpeed > 0.03) {
+                this.push(e);
+            }
         }
 
         if (this.level().isClientSide) {
