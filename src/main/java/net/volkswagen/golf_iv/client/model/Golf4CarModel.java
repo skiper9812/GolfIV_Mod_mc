@@ -664,8 +664,8 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
 
         PartDefinition lights = body.addOrReplaceChild("lights", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition front2 = lights.addOrReplaceChild("front2", CubeListBuilder.create().texOffs(239, 36).addBox(7.0F, -9.0F, -30.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(40, 230).addBox(9.0F, -9.0F, -30.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+        PartDefinition front2 = lights.addOrReplaceChild("front2", CubeListBuilder.create().texOffs(183, 176).addBox(7.0F, -9.0F, -30.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(143, 196).addBox(9.0F, -9.0F, -30.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
                 .texOffs(40, 230).addBox(-10.0F, -9.0F, -30.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
                 .texOffs(227, 140).addBox(10.0F, -9.0F, -30.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(153, 300).addBox(-11.0F, -9.0F, -30.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
@@ -765,8 +765,6 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
                 .texOffs(144, 303).addBox(11.0F, -18.0F, -8.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(214, 303).addBox(-12.0F, -18.0F, -8.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(218, 303).addBox(-12.0F, -18.0F, -7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(182, 100).addBox(-12.0F, -18.0F, -5.0F, 1.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(184, 100).addBox(-13.0F, -18.0F, -5.0F, 1.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
                 .texOffs(140, 303).addBox(10.0F, -19.0F, -7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(210, 303).addBox(-11.0F, -19.0F, -7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(282, 152).addBox(10.0F, -20.0F, -6.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
@@ -809,7 +807,6 @@ public class Golf4CarModel extends EntityModel<Golf4CarEntity> {
                 .texOffs(296, 115).addBox(13.0F, -3.0F, -29.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
                 .texOffs(114, 263).addBox(11.0F, -2.0F, -32.0F, 1.0F, 1.0F, 8.0F, new CubeDeformation(0.0F))
                 .texOffs(264, 63).addBox(-12.0F, -2.0F, -32.0F, 1.0F, 1.0F, 8.0F, new CubeDeformation(0.0F))
-                .texOffs(146, 283).addBox(-13.0F, -2.0F, -32.0F, 1.0F, 0.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(274, 166).addBox(-13.0F, -2.0F, -30.0F, 1.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
                 .texOffs(216, 262).addBox(-13.0F, -3.0F, -32.0F, 1.0F, 1.0F, 8.0F, new CubeDeformation(0.0F))
                 .texOffs(138, 252).addBox(-12.0F, -3.0F, -33.0F, 1.0F, 1.0F, 9.0F, new CubeDeformation(0.0F))
