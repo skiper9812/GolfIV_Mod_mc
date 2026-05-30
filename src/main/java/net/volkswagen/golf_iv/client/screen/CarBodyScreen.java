@@ -35,6 +35,7 @@ public class CarBodyScreen extends AbstractContainerScreen<CarBodyMenu> {
     private static final int GUI_W = 225;
     private static final int GUI_H = 222;
     private static final int GUI_LEFT_SHIFT = 24;
+    private static final int CAR_RENDER_SCALE = 12;
 
     private boolean isExtended = false;
     private float autoRotateAngle = 0.0F;
@@ -86,9 +87,9 @@ public class CarBodyScreen extends AbstractContainerScreen<CarBodyMenu> {
 
         if (this.dummyCar != null) {
             int renderX = this.leftPos + 112 + GUI_LEFT_SHIFT;
-            int renderY = this.topPos  + 90;
+            int renderY = this.topPos  + 79;
             float currentYaw = this.autoRotateAngle + this.manualRotX;
-            renderCarEntity(guiGraphics, renderX, renderY, 20, currentYaw, this.manualRotY, this.dummyCar);
+            renderCarEntity(guiGraphics, renderX, renderY, CAR_RENDER_SCALE, currentYaw, this.manualRotY, this.dummyCar);
         }
     }
 
@@ -106,6 +107,8 @@ public class CarBodyScreen extends AbstractContainerScreen<CarBodyMenu> {
         if (this.dummyCar != null && this.menu != null) {
             this.dummyCar.setHasSteer(!this.menu.getSlot(2).getItem().isEmpty());
             this.dummyCar.setWheelsCount(this.menu.getSlot(3).getItem().getCount());
+            this.dummyCar.setSeatsCount(this.menu.getSlot(4).getItem().getCount());
+            this.dummyCar.setHasRadio(!this.menu.getSlot(8).getItem().isEmpty());
             this.dummyCar.setLightsCount(this.menu.getSlot(6).getItem().getCount());
         }
     }

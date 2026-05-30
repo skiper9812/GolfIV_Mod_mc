@@ -608,27 +608,8 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
 
         // Tuning offsets
         double frontOffset = 2.8;
-        double backOffset = 2.2;
-        double sideOffset = 0.4;
-
-        if (areFrontLightsOn()) {
-            for (int side = -1; side <= 1; side += 2) {
-                double fx = this.getX()
-                        + forwardX * frontOffset
-                        + rightX * side * sideOffset;
-
-                double fz = this.getZ()
-                        + forwardZ * frontOffset
-                        + rightZ * side * sideOffset;
-
-                this.level().addParticle(
-                        ParticleTypes.END_ROD,
-                        fx,
-                        this.getY() + 0.6,
-                        fz,
-                        0, 0, 0);
-            }
-        }
+        double backOffset = 2.85;
+        double sideOffset = 0.7;
 
         if (areBackLightsOn()) {
             for (int side = -1; side <= 1; side += 2) {
@@ -643,7 +624,7 @@ public class Golf4CarEntity extends Boat implements HasCustomInventoryScreen, Co
                 this.level().addParticle(
                         ParticleTypes.FLAME,
                         bx,
-                        this.getY() + 0.5,
+                        this.getY() + 0.33,
                         bz,
                         0, 0, 0);
             }

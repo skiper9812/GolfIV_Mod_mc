@@ -92,7 +92,7 @@ public class Golf4CarRenderer extends EntityRenderer<Golf4CarEntity> {
         }
 
         this.model.setupAnim(entity, 0.0F, 0.0F, ageInTicks, 0.0F, 0.0F);
-        this.model.updateComponents(entity.isPlain(), entity.hasSteer(), entity.getWheelsCount(), entity.getLightsCount());
+        this.model.updateComponents(entity.isPlain(), entity.hasSteer(), entity.getWheelsCount(), entity.getLightsCount(), entity.getSeatsCount(), entity.hasRadio());
         this.model.setWheelRotation(wheelState.rotation);
 
         VertexConsumer vertexconsumer = buffer.getBuffer(this.model.renderType(TEXTURE));

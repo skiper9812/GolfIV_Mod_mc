@@ -49,8 +49,10 @@ public class CarBodyBlockEntityRenderer implements BlockEntityRenderer<CarBodyBl
 
         boolean hasSteer = !blockEntity.getItem(2).isEmpty();
         int wheelsCount = blockEntity.getItem(3).getCount();
+        int seatsCount = blockEntity.getItem(4).getCount();
         int lightsCount = blockEntity.getItem(6).getCount();
-        this.model.updateComponents(false, hasSteer, wheelsCount, lightsCount);
+        boolean hasRadio = !blockEntity.getItem(8).isEmpty();
+        this.model.updateComponents(false, hasSteer, wheelsCount, lightsCount, seatsCount, hasRadio);
         
         this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 

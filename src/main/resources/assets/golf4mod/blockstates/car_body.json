@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "minecraft:block/air" }
+    "": { "model": "golf4mod:block/tank" }
   }
 }
